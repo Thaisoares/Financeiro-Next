@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="90" fill="#1e293b" />
+  
+  <!-- Inner circle/coin shape -->
+  <circle cx="100" cy="100" r="75" fill="#0f172a" />
+  
+  <!-- Stylized arrow/graph -->
+  <path d="M60 120 L90 90 L120 110 L150 70" 
+        stroke="#38bdf8" 
+        stroke-width="8" 
+        fill="none" 
+        stroke-linecap="round"
+        stroke-linejoin="round" />
+  
+  <!-- Dollar symbol -->
+  <path d="M95 65 L105 65 L105 135 L95 135 M90 80 L110 80 M90 120 L110 120" 
+        stroke="#38bdf8" 
+        stroke-width="6" 
+        fill="none" 
+        stroke-linecap="round" />
+</svg>
