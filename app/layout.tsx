@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
 import "./globals.css";
-import SessionProviderWrapper from "./_components/sessionProviderWrapper";
+import SessionProviderWrapper from "./_components/session-provider-wrapper";
 
 const mulish = Mulish({
   subsets: ["latin-ext"],
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${mulish.className} antialiased`}>
+      <body className={`${mulish.className} dark antialiased`}>
         <SessionProviderWrapper>{children}</SessionProviderWrapper>
       </body>
     </html>

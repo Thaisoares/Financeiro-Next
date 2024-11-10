@@ -19,3 +19,9 @@ declare module "next-auth" {
     role?: string;
   }
 }
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    id?: string; // Add the id property to the JWT interface
+  }
+}
