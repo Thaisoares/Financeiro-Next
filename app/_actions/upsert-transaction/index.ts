@@ -17,11 +17,11 @@ export const upsertTransaction = async (
     const userId = session.user.id;
 
     await db.transaction.upsert({
+      update: { ...params, userId },
+      create: { ...params, userId },
       where: {
         id: params.id ?? "",
       },
-      update: { ...params, userId },
-      create: { ...params, userId },
     });
 
     revalidatePath("/transactions");
