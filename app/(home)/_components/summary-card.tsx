@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader } from "@/app/_components/ui/card";
+import { formatCurrency } from "@/app/_utils/currency";
 import { ReactNode } from "react";
 interface props {
   icon: ReactNode;
@@ -21,10 +22,7 @@ const SummaryCard = ({ icon, title, amount, size = "small" }: props) => {
         <p
           className={`font-bold ${size === "small" ? "text-2xl" : "text-4xl"}`}
         >
-          {Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(amount)}
+          {formatCurrency(amount)}
         </p>
       </CardContent>
     </Card>

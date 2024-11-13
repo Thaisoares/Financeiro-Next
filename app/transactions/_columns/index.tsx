@@ -8,6 +8,7 @@ import { TransactionCategoryMap } from "@/types/transactionCategory";
 import { TransactionPaymentMethodMap } from "@/types/transactionPaymentMethod";
 import { Button } from "@/app/_components/ui/button";
 import EditTransactionButton from "./_componentes/edit-transaction-button";
+import { formatCurrency } from "@/app/_utils/currency";
 
 export const transactionColumns: ColumnDef<Transaction>[] = [
   {
@@ -32,10 +33,7 @@ export const transactionColumns: ColumnDef<Transaction>[] = [
     accessorKey: "amount",
     header: "Valor",
     cell: ({ row: { original: transaction } }) => {
-      return new Intl.NumberFormat("pt-BR", {
-        style: "currency",
-        currency: "BRL",
-      }).format(Number(transaction.amount));
+      return formatCurrency(Number(transaction.amount));
     },
   },
   {

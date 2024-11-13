@@ -100,6 +100,14 @@ export const getDashboardData = async (
     ),
   }));
 
+  const lastTransactions = await db.transaction.findMany({
+    where: {
+      ...filterDate,
+    },
+    orderBy: { date: "desc" },
+    take: 20,
+  });
+
   return {
     depositsTotal,
     expensesTotal,
@@ -107,5 +115,6 @@ export const getDashboardData = async (
     balance,
     typesPercentage,
     totalExpensePerCategory,
+    lastTransactions,
   };
 };
