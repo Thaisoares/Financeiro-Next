@@ -1,5 +1,6 @@
 import { Badge } from "@/app/_components/ui/badge";
 import { TransactionTypesMap } from "@/types/transactionType";
+import { TransactionTypeColors } from "@/types/typesColors";
 import { TransactionType } from "@prisma/client";
 import { CircleIcon } from "lucide-react";
 
@@ -16,9 +17,20 @@ interface TransactionTypeBadgeProps {
 const TransactionTypeBadge = ({
   transactionType,
 }: TransactionTypeBadgeProps) => {
+  const backgroud = TransactionTypeColors[transactionType].bg;
+  const fill = TransactionTypeColors[transactionType].fill;
+  const text = TransactionTypeColors[transactionType].text;
+  return (
+    <Badge
+      className={`hover:bg-muted ${backgroud} bg-opacity-10 font-bold ${text}`}
+    >
+      <CircleIcon className={`mr-2 ${fill}`} size={10} />
+      {TransactionTypesMap[transactionType]}
+    </Badge>
+  );
   if (transactionType == TransactionType.DEPOSIT) {
     return (
-      <Badge className="hover:bg-muted bg-green-600 bg-opacity-10 font-bold text-green-600">
+      <Badge className="bg-green-600 bg-opacity-10 font-bold text-green-600 hover:bg-muted">
         <CircleIcon className="mr-2 fill-green-600" size={10} />
         {TransactionTypesMap[TransactionType.DEPOSIT]}
       </Badge>
@@ -26,14 +38,14 @@ const TransactionTypeBadge = ({
   }
   if (transactionType == TransactionType.EXPENSE) {
     return (
-      <Badge className="hover:bg-muted bg-red-700 bg-opacity-10 font-bold text-red-700">
+      <Badge className="bg-red-700 bg-opacity-10 font-bold text-red-700 hover:bg-muted">
         <CircleIcon className="mr-2 fill-red-700" size={10} />
         {TransactionTypesMap[TransactionType.EXPENSE]}
       </Badge>
     );
   }
   return (
-    <Badge className="hover:bg-muted bg-purple-800 bg-opacity-10 font-bold text-purple-800">
+    <Badge className="bg-purple-800 bg-opacity-10 font-bold text-purple-800 hover:bg-muted">
       <CircleIcon className="mr-2 fill-purple-800" size={10} />
       {TransactionTypesMap[TransactionType.INVESTMENT]}
     </Badge>
