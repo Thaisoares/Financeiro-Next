@@ -7,6 +7,7 @@ import MonthYearSelector from "./_components/month-year-selector";
 import { isMatch } from "date-fns";
 import { getDashboardData } from "../_data/get-dashboard";
 import PieChartTransactions from "./_components/pie-chart-transactions";
+import ExpensesPerCategory from "./_components/expenses-per-category";
 
 interface props {
   searchParams: {
@@ -43,6 +44,9 @@ const SubscriptionPage = async ({ searchParams: { month, year } }: props) => {
             <SummaryCards {...data} />
             <div className="grid grid-cols-3 grid-rows-1 gap-6">
               <PieChartTransactions {...data} />
+              <ExpensesPerCategory
+                expensePerCategory={data.totalExpensePerCategory}
+              />
             </div>
           </div>
         </div>
