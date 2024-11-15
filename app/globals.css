@@ -10,6 +10,11 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  .no-hover:hover {
+    background-color: inherit; /* ou a cor original do botão */
+    color: inherit; /* ou a cor original do texto */
+    box-shadow: none; /* se houver sombra */
+  }
 }
 
 @layer base {
