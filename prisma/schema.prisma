@@ -13,6 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id             String        @id @default(uuid())
+  email          String        @unique
+  name           String
+  password       String?
+  googleAuthId   String?
+  subscriptionId String?       @unique
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  transactions   Transaction[]
+  subscription   Subscription? @relation("ActiveSubscription", fields: [subscriptionId], references: [id])
+}
+
 model Transaction {
   id            String                   @id @default(uuid())
   name          String
@@ -24,6 +37,23 @@ model Transaction {
   createdAt     DateTime                 @default(now())
   updatedAt     DateTime                 @updatedAt
   userId        String
+  user          User                     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Subscription {
+  id                   String    @id @default(uuid())
+  userId               String
+  stripeSubscriptionId String
+  stripeCustomerId     String
+  active               Boolean   @default(true)
+  inativationDate      DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  activeFor            User?     @relation("ActiveSubscription")
+
+  @@index([userId])
 }
 
 enum TransactionType {

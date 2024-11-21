@@ -9,6 +9,7 @@ import { getDashboardData } from "../_data/get-dashboard";
 import PieChartTransactions from "./_components/pie-chart-transactions";
 import ExpensesPerCategory from "./_components/expenses-per-category";
 import LastTransactions from "./_components/last-transactions";
+import AiReportButton from "./_components/ai-report-button";
 
 interface props {
   searchParams: {
@@ -38,7 +39,10 @@ const SubscriptionPage = async ({ searchParams: { month, year } }: props) => {
       <div className="flex h-full flex-col space-y-6 overflow-hidden p-6">
         <div className="flex justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
-          <MonthYearSelector />
+          <div className="center-items-gap-3 flex">
+            <AiReportButton />
+            <MonthYearSelector />
+          </div>
         </div>
         <div className="grid grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">

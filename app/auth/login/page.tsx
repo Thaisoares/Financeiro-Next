@@ -20,13 +20,9 @@ const LoginPage = () => {
 
   // If user is already logged in, redirect to dashboard
   if (session) {
-    router.push("/teste");
+    router.push("/");
     return null;
   }
-
-  console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID);
-  console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET);
-  console.log("NEXTAUTH_SECRET:", process.env.NEXTAUTH_SECRET);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,20 +115,13 @@ const LoginPage = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="flex justify-center">
             <Button
               variant="outline"
               onClick={() => signIn("google")}
               className="border-[#334155] text-black"
             >
               Google
-            </Button>
-            <Button
-              variant="outline"
-              onClick={() => signIn("microsoft")}
-              className="border-[#334155] text-black"
-            >
-              Microsoft
             </Button>
           </div>
 

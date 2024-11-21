@@ -2,13 +2,7 @@ import "next-auth";
 
 declare module "next-auth" {
   interface Session {
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      image?: string;
-      role?: string;
-    };
+    user: User;
   }
 
   interface User {
@@ -16,7 +10,7 @@ declare module "next-auth" {
     name: string;
     email: string;
     image?: string;
-    role?: string;
+    isPremium: boolean;
   }
 }
 

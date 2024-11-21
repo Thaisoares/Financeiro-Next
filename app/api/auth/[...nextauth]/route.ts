@@ -1,3 +1,4 @@
+import { db } from "@/app/_lib/prisma";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -9,6 +10,37 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          // Verifica se o usuário já existe
+          const existingUser = await db.user.findUnique({
+            where: { email: user.email! },
+          });
+
+          if (!existingUser) {
+            // Cria novo usuário se não existir
+            const newUser = await db.user.create({
+              data: {
+                email: user.email!,
+                name: user.name!,
+                googleAuthId: user.id,
+              },
+            });
+            user.id = newUser.id;
+          } else {
+            user.id = existingUser.id;
+          }
+
+          return true;
+        } catch (error) {
+          console.error("Erro ao processar login:", error);
+          return false;
+        }
+      }
+
+      return true;
+    },
     async jwt({ token, user, account }) {
       // Add user ID to the token if user is authenticated
       if (account && user) {
@@ -17,8 +49,13 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // Add user ID to the session object
-      session.user.id = token.id!; // Attach the user ID to the session
+      session.user.id = token.id!;
+
+      const dbUser = await db.user.findUnique({
+        where: { id: session.user.id },
+      });
+      session.user.isPremium = !!dbUser?.subscriptionId;
+
       return session;
     },
   },

@@ -6,12 +6,14 @@ import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import { CheckIcon, XIcon } from "lucide-react";
 import { Button } from "../_components/ui/button";
 import AcquirePlanButton from "./_components/acquire-plan-button";
+import ActiveBadge from "./_components/active-badge";
 
 const SubscriptionPage = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
     return redirect("/auth/login");
   }
+  const userIsPremium = session.user.isPremium;
 
   return (
     <>
@@ -20,7 +22,8 @@ const SubscriptionPage = async () => {
         <h1 className="text-2xl font-bold">Assinatura</h1>
         <div className="flex gap-6">
           <Card className="w-[450px]">
-            <CardHeader className="border-b border-solid py-8">
+            <CardHeader className="relative border-b border-solid py-8">
+              {!userIsPremium && <ActiveBadge />}
               <h2 className="justify-center text-center">Plano Básico</h2>
               <div className="flex items-center justify-center">
                 <span className="pr-2 text-4xl">R$</span>
@@ -50,7 +53,8 @@ const SubscriptionPage = async () => {
           </Card>
 
           <Card className="w-[450px]">
-            <CardHeader className="border-b border-solid py-8">
+            <CardHeader className="relative border-b border-solid py-8">
+              {userIsPremium && <ActiveBadge />}
               <h2 className="justify-center text-center">Plano Premium</h2>
               <div className="flex items-center justify-center">
                 <span className="pr-2 text-4xl">R$</span>
@@ -69,7 +73,10 @@ const SubscriptionPage = async () => {
                 <p>Relatório de IA</p>
               </div>
               <div className="mt-2 flex w-full justify-center">
-                <AcquirePlanButton />
+                <AcquirePlanButton
+                  userIsPremium={userIsPremium}
+                  userEmail={session.user.email}
+                />
               </div>
             </CardContent>
           </Card>

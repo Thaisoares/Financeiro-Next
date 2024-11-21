@@ -3,8 +3,14 @@
 import { Button } from "@/app/_components/ui/button";
 import { createStripeCheckout } from "../_action/create-stripe-checkout";
 import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
 
-const AcquirePlanButton = () => {
+interface props {
+  userIsPremium: boolean;
+  userEmail: string;
+}
+
+const AcquirePlanButton = ({ userIsPremium, userEmail }: props) => {
   const handleAcquirePlanClick = async () => {
     const { sessionId } = await createStripeCheckout();
     if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
@@ -19,9 +25,21 @@ const AcquirePlanButton = () => {
 
     await stripe.redirectToCheckout({ sessionId });
   };
+
+  if (userIsPremium) {
+    return (
+      <Button className="w-[300px] rounded-full" variant={"link"}>
+        <Link
+          href={`${process.env.NEXT_PUBLIC_STRIPE_CUSTOMER_PORTAL_URL as string}?prefilled_email=${userEmail}`}
+        >
+          Gerenciar plano
+        </Link>
+      </Button>
+    );
+  }
   return (
     <Button className="w-[300px] rounded-full" onClick={handleAcquirePlanClick}>
-      Fazer upgrade do plano
+      Adquirir plano
     </Button>
   );
 };
